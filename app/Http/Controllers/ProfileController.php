@@ -15,8 +15,8 @@ class ProfileController extends Controller
 {
     use Wallets;
 
-    private $userReg = 10;
-    private $userCom = 2;
+    private $userReg = 15;
+    private $userCom = 3;
 
     public function index(){
         return view('profile.profile');
