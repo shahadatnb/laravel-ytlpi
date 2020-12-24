@@ -24,6 +24,9 @@
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     @yield('stylesheet')
     <style>
+        .nav.navbar-nav {
+            border: 1px solid cyan;
+        }
       .nav.navbar-nav.navbar-right li a {
           color: #e5ec0e;
       }

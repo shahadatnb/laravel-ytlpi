@@ -17,6 +17,7 @@ class HomeController extends Controller
 {
     use Wallets;
     private $withdrowAmt = 3;
+    private $tranferToww = 0;
     private $mBonus = 10;
     private $dayLimit = 200;
     private $freeLimit = 50;
@@ -421,7 +422,7 @@ class HomeController extends Controller
     {
         $this->validate($request, array(
             'remark' => 'nullable',
-            'payment' => 'required|numeric|min:'.$this->withdrowAmt,
+            'payment' => 'required|numeric|min:'.$this->tranferToww,
             )
         );
 
