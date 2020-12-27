@@ -37,6 +37,7 @@
           $accounts = [
             'bKash'=>'bKash',
             'Rocket'=>'Rocket',
+            'Nagod'=>'Nagod',
             'Others'=>'Others'
           ];
         @endphp
