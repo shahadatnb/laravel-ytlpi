@@ -69,7 +69,7 @@ class PtcController extends Controller
                 $data->user_id = Auth::User()->id;
                 $data->save();
 
-                $user = User::find(Auth::User()->placementId);
+                $user = User::find(Auth::User()->referralId);//placementId
                 if($user){
                     $c=$this->selfIncomeCheck($user->id);
                     $amt = $youtube_earn*.5;
@@ -79,7 +79,7 @@ class PtcController extends Controller
                         $this->selfIncomeNew($user->id, $amt);
                     }
                     //------------- L-2
-                    $user2 = User::find($user->placementId);
+                    $user2 = User::find($user->referralId);
                     if($user2){
                     $c=$this->selfIncomeCheck($user2->id);
                     $amt = $youtube_earn*.5;
@@ -89,7 +89,7 @@ class PtcController extends Controller
                         $this->selfIncomeNew($user2->id, $amt);
                     }
                       //------------- L-3
-                      $user3 = User::find($user2->placementId);
+                      $user3 = User::find($user2->referralId);
                       if($user3){
                       $c=$this->selfIncomeCheck($user3->id);
                       $amt = $youtube_earn*.4;
@@ -99,7 +99,7 @@ class PtcController extends Controller
                           $this->selfIncomeNew($user3->id, $amt);
                       }
                         //------------- L-3
-                        $user4 = User::find($user3->placementId);
+                        $user4 = User::find($user3->referralId);
                         if($user4){
                         $c=$this->selfIncomeCheck($user4->id);
                         $amt = $youtube_earn*.3;
@@ -109,7 +109,7 @@ class PtcController extends Controller
                             $this->selfIncomeNew($user4->id, $amt);
                         }
                           //------------- L-3
-                          $user5 = User::find($user4->placementId);
+                          $user5 = User::find($user4->referralId);
                           if($user5){
                           $c=$this->selfIncomeCheck($user5->id);
                           $amt = $youtube_earn*.2;
