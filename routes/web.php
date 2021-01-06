@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::post('/sendMoneyAc', 'HomeController@sendMoneyAc')->name('sendMoneyAc');
 	Route::post('/withdrawBalance', 'HomeController@withdrawBalance')->name('withdrawBalance');
 	Route::post('/sendMoneyWw', 'HomeController@sendMoneyWw')->name('sendMoneyWw');
+	Route::post('/sendMoneyYoutubeToWw', 'HomeController@sendMoneyYoutubeToWw')->name('sendMoneyYoutubeToWw');
 
 	Route::get('/youtubeClick', 'PtcController@youtubeClick')->name('youtubeClick');
 	Route::get('/youtubeClick/{id}', 'PtcController@youtubeClickPost');

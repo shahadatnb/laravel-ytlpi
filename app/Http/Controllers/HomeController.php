@@ -453,6 +453,38 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    public function sendMoneyYoutubeToWw(Request $request)
+    {
+        $this->validate($request, array(
+            'remark' => 'nullable',
+            'payment' => 'required|numeric|min:'.$this->tranferToww,
+            )
+        );
+
+        if($this->youtubeBalance(Auth::user()->id) < $request->payment ){
+            Session::flash('warning','Sorry, Your Balance Less then $'.$request->payment);
+        }else{
+            //$remark = $request->paymentMethod.' : '.$request->accountNo;
+            //$payble = $request->payment - ($request->payment/100)*10;
+            $data2 = new EarnWallet;
+            $data2->user_id = Auth::user()->id;
+            $data2->payment = $request->payment;
+            $data2->remark = 'Withdraw - '.$request->remark;
+            $data2->save();
+
+            
+            $data = new Wallet;
+            $data->user_id = Auth::user()->id;
+            $data->receipt = $request->payment;
+            $data->remark = 'Withdraw Form youtube - '.$request->remark;
+            $data->wType = 'withdrawWallet';
+            $data->save();
+
+            Session::flash('success','Transfared to ');
+        }
+        return redirect()->back();
+    }
+
     public function withdrawBalance(Request $request)
     {
         $this->validate($request, array(
