@@ -30,8 +30,15 @@ class HomeController extends Controller
     }
 
     public function index(){
-        //$this->rank();
         $user_id= Auth::user()->id;
+/*
+        $allIncome = $this->allIncome($user_id);
+        if($allIncome >= 40){
+            return view('pages.renew');
+        }
+
+        */
+        //$this->rank();
        $wallets=$this->allBalance($user_id);
        $wallets['totalWithdraw'] = ['balance'=>$this->totalBalance($user_id,'withdrawWallet'),'title'=>'Total Withdraw','bg'=>'success'];
        $wallets['totalSponsor'] = ['balance'=>$this->totalBalance($user_id,'sponsorWallet'),'title'=>'Total Sponsor','bg'=>'dark'];
@@ -501,11 +508,11 @@ class HomeController extends Controller
             Session::flash('warning','Sorry, Your Balance Less then $'.$request->payment);
         }else{
             //$remark = $request->paymentMethod.' : '.$request->accountNo;
-            $payble = $request->payment - ($request->payment/100)*10;
+            //$payble = $request->payment - ($request->payment/100)*10;
             $data2 = new AdminWallet;
             $data2->user_id = Auth::user()->id;
-            $data2->payment = round($payble);
-            //$data2->payment = $request->payment;
+            //$data2->payment = round($payble);
+            $data2->payment = $request->payment;
             $data2->remark = $request->bankName.' : '.$request->accountNo.' - '.$request->remark;            
             //$data2->admin_id = 1;//$request->paymentId;
             $data2->save();

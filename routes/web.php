@@ -32,6 +32,8 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/rank', 'HomeController@rank')->name('rank');
 	Route::get('/rankList', 'HomeController@rankList')->name('rankList');
+	
+	Route::get('/renew', 'HomeController@renew')->name('renew');
 	//Route::get('/404', 'PageController@notFind')->name('/404');
 
 	Route::get('/myWallet/{wallet}', 'HomeController@myWallet')->name('myWallet');

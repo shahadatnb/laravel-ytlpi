@@ -50,6 +50,14 @@ trait Wallets
         return $receipt;
     }
 
+    public function allIncome($id)
+    {
+        $receipt = Wallet::where('user_id',$id)->whereNotIn('wType',['withdrawWallet','registerWallet'])->sum('receipt');
+        $payment = Wallet::where('user_id',$id)->whereNotIn('wType',['withdrawWallet','registerWallet'])->sum('payment');
+        $balance = $receipt-$payment;
+        return $balance;
+    }
+
     public function allBalance($id){
         $balances = [];
             foreach ($this->wallets as $key=>$value) {
