@@ -520,7 +520,6 @@ class HomeController extends Controller
             
             $data = new Wallet;
             $data->user_id = Auth::user()->id;
-            //$data->payment = round($payble);
             $data->payment = $request->payment;
             $data->remark = 'Withdraw-'.$request->bankName.' : '.$request->accountNo.' - '.$request->remark;
             $data->wType = 'withdrawWallet';
