@@ -33,6 +33,11 @@ class PtcController extends Controller
      */
     public function youtubeClick()
     {
+        if($this->checkRenew()==true){
+          Session::flash('warning','Please renew your account');
+          return redirect()->route('home');
+        }
+
         $p = Ptc::where('publish_date',date('Y-m-d'))->latest()->get();
         /*$ptc = DB::table('ptcs')
             ->leftJoin('ptc_click','ptcs.id','ptc_click.ptc_id')

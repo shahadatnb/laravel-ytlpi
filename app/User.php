@@ -94,29 +94,30 @@ class User extends Authenticatable
 
 
 
-    public static function myChildOnlyPremium($id, $hand){
-        global $count;
-        $count = 0;
+    public static function myChildAmount($id, $hand){
+        global $amount;
+        $amount = 0;
         $child =  User::where('hand',$hand)->where('placementId',$id)->first(); //->pluck('id')
-        if($child){            
-            if($child->premium == 1 || $child->premium == 2){$count = 1;} // || $child->premium == 2
-            if(count($child->childs) > 0){
-              $count = User::cChildOnlyPremium($child->childs,$count);
-            }           
-        }
-        return $count; 
-    }
-
-    public static function cChildOnlyPremium($child,$count){
-        foreach ($child as $member) {
-            global $count;
-            //dd($child); exit;
-            if($member->premium == 1 || $member->premium == 2 ){$count ++;}
-            if(count($member->childs) > 0){
-                    User::cChildOnlyPremium($member->childs,$count);
+        
+        if($child){
+            $amount = $child->packeg->amount;
+            if(count($child->childs)){
+              $amount = User::cChildAmount($child->childs,$amount);
             }
         }
-        return $count;
+        return $amount;
+    }
+
+    public static function cChildAmount($child,$amount){
+        global $amount;
+        //dd($child);
+        foreach ($child as $member) { //dd($member->childs);//dd(count(User::nChilds($member->id)));            
+            $amount += $member->packeg->amount;
+            if(count($member->childs)){
+                User::cChildAmount($member->childs,$amount);
+            }
+        }
+        return $amount;
     }
 
 

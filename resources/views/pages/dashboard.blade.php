@@ -6,7 +6,26 @@
     <h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
   </div>
   <div class="card-body">
+    @include('layouts._message')
     <div class="row">
+      @if($renew == 1)
+      <div class="col-sm-6 col-lg-3 mb-4">
+        <div class="card bg-primary text-white shadow">
+          <div class="card-body text-center">
+            <a href="{{url('/renew')}}" class="btn btn-success">Renew</a>
+            <div class="text-white">Please Renew</div>
+          </div>
+        </div>
+      </div>
+      @endif
+      <div class="col-sm-6 col-lg-3 mb-4">
+        <div class="card bg-{{$rankStatus['bg']}} text-white shadow">
+          <div class="card-body text-center">
+            {{$rankStatus['balance']}}
+            <div class="text-white">{{$rankStatus['title']}}</div>
+          </div>
+        </div>
+      </div>
     	@foreach($wallets as $item)
       <div class="col-sm-6 col-lg-3 mb-4">
         <div class="card bg-{{$item['bg']}} text-white shadow">

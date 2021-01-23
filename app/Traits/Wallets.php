@@ -4,28 +4,40 @@ use App\AdminWallet;
 use App\Wallet;
 use App\EarnWallet;
 use App\User;
+use Auth;
 
 trait Wallets
 {
     public $wallets =[
         'withdrawWallet'=>['title'=>'Withdraw wallet','bg'=>'primary'],
         'registerWallet'=>['title'=>'Register wallet','bg'=>'info'],
+        'renewWallet'=>['title'=>'Renew wallet','bg'=>'danger'],
         'sponsorWallet'=>['title'=>'Sponsor wallet','bg'=>'warning'],
         'selfWallet'=>['title'=>'Generation income wallet','bg'=>'success'],
     ];
 
+    protected function checkRenew(){
+        $user_id= Auth::user()->id;
+        $allIncome = $this->allIncome($user_id);
+        $status = $allIncome/40;
+        if($status > Auth::user()->renew){
+            return true;
+        }
+        return false;
+    }
+
     public $rank = [
         0=>['point'=>0, 'amount'=>0, 'prize'=>'', 'title'=>'No Rank'],
-        1=>['point'=>15, 'amount'=>500, 'prize'=>'500 BDT', 'title'=>'Assistant marketing officer'],
-        2=>['point'=>60, 'amount'=>1500, 'prize'=>'1,500 BDT', 'title'=>'Marketing officer'],
-        3=>['point'=>240, 'amount'=>5000, 'prize'=>'5,000 BDT', 'title'=>'Assistant executive'],
-        4=>['point'=>960, 'amount'=>15000, 'prize'=>'15,000 BDT', 'title'=>'Executive'],
-        5=>['point'=>3840, 'amount'=>40000, 'prize'=>'40,000 BDT + laptop', 'title'=>'Assistant manager'],
-        6=>['point'=>15360, 'amount'=>150000, 'prize'=>'1,50,000 BDT', 'title'=>'Manager'],
-        7=>['point'=>61440, 'amount'=>500000, 'prize'=>'5,00,000 BDT', 'title'=>'Additional Director'],
-        8=>['point'=>245760, 'amount'=>1000000, 'prize'=>'10,00,000 BDT', 'title'=>'Director'],
-        9=>['point'=>983040, 'amount'=>2500000, 'prize'=>'25,00,000 BDT', 'title'=>'Honorary Director'],
-        10=>['point'=>3932160, 'amount'=>3500000, 'prize'=>'35 lak + axio car', 'title'=>'Vice chairman'],
+        1=>['point'=>225, 'amount'=>5, 'prize'=>'$ 5', 'title'=>'Associate'],
+        2=>['point'=>900, 'amount'=>20, 'prize'=>'$ 20', 'title'=>'Promoter'],
+        3=>['point'=>4000, 'amount'=>50, 'prize'=>'$ 50', 'title'=>'Consultant'],
+        4=>['point'=>15000, 'amount'=>150, 'prize'=>'$ 150', 'title'=>'Executive'],
+        5=>['point'=>60000, 'amount'=>500, 'prize'=>'$ 500 + laptop', 'title'=>'Emarald'],
+        6=>['point'=>240000, 'amount'=>1800, 'prize'=>'$ 1,800', 'title'=>'Additional Director'],
+        7=>['point'=>960000, 'amount'=>6000, 'prize'=>'$ 6,000', 'title'=>'Director'],
+        8=>['point'=>15000000, 'amount'=>12500, 'prize'=>'$ 12,500', 'title'=>'Emarald Director'],
+        9=>['point'=>983040, 'amount'=>2500000, 'prize'=>'$ 30,000', 'title'=>'Crown executive director'],
+        10=>['point'=>60000000, 'amount'=>40000, 'prize'=>'$ 40,000', 'title'=>'Vice chairman'],
     ];
     
     public function wallets() {
@@ -52,9 +64,9 @@ trait Wallets
 
     public function allIncome($id)
     {
-        $receipt = Wallet::where('user_id',$id)->whereNotIn('wType',['withdrawWallet','registerWallet'])->sum('receipt');
-        $payment = Wallet::where('user_id',$id)->whereNotIn('wType',['withdrawWallet','registerWallet'])->sum('payment');
-        $balance = $receipt-$payment;
+        $selfWallet = Wallet::where('user_id',$id)->whereIn('wType',['selfWallet'])->sum('receipt');
+        $EarnWallet = EarnWallet::where('user_id',$id)->sum('receipt');
+        $balance = $selfWallet+$EarnWallet;
         return $balance;
     }
 

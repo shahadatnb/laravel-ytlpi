@@ -2,7 +2,6 @@
 @section('title','Rank')
 @section('content')
 
-<div class="row">
   <div class="card">
     <div class="card-header with-border">
       <h3 class="card-title">Rank List</h3>
@@ -26,7 +25,6 @@
       </table>
     </div>
   </div>
-</div>
  @endsection
  {{-- 
 <div class="col-xl-3 col-md-6 mb-4">

@@ -21,30 +21,49 @@ class HomeController extends Controller
     private $mBonus = 10;
     private $dayLimit = 200;
     private $freeLimit = 50;
-    private $upgrateAmt = 120;
+    private $renew = 15;
     private $count = 1;
     private $lCcount = 1;
 
-    public function pending(){
-         return view('pages.pending');
+    public function renew(){
+        $status = Auth::user()->renew;
+        if($this->balance(Auth::user()->id,'renewWallet') < $this->renew ){
+            Session::flash('warning','Sorry, Your Renew Balance Less then $'.$this->renew);
+            return redirect()->route('home');
+        }
+        $user = User::find(Auth::user()->id);
+        $user->renew = ++$status;
+        $user->save();
+
+        $data = new Wallet;
+        $data->user_id = Auth::user()->id;
+        $data->payment = $this->renew;
+        $data->wType = 'renewWallet';
+        $data->remark = 'Account Renew';
+        $data->save();
+        return redirect()->route('home');
     }
 
     public function index(){
         $user_id= Auth::user()->id;
-/*
-        $allIncome = $this->allIncome($user_id);
-        if($allIncome >= 40){
-            return view('pages.renew');
-        }
 
-        */
-        //$this->rank();
+       $rankValue = $this->rank();
        $wallets=$this->allBalance($user_id);
+
+       if($this->checkRenew()==true){
+        $renew = 1;
+       }else{
+        $renew = 0;
+       }
+
+       $rankStatus = ['balance'=>$this->rank[Auth::user()->rank]['title'],'title'=>'My Rank','bg'=>'primary'];
        $wallets['totalWithdraw'] = ['balance'=>$this->totalBalance($user_id,'withdrawWallet'),'title'=>'Total Withdraw','bg'=>'success'];
        $wallets['totalSponsor'] = ['balance'=>$this->totalBalance($user_id,'sponsorWallet'),'title'=>'Total Sponsor','bg'=>'dark'];
        $wallets['totalSelf'] = ['balance'=>$this->totalBalance($user_id,'selfWallet'),'title'=>'Total Generation Income','bg'=>'secondary'];
        $wallets['youtube'] = ['balance'=>$this->youtubeBalance($user_id),'title'=>'Youtube Wallet','bg'=>'danger'];
-        return view('pages.dashboard',compact('wallets'));
+       $wallets['LeftPoint']=['balance'=>$rankValue['cLeft'],'title'=>'Left Point','bg'=>'success'];
+       $wallets['RightPoint']=['balance'=>$rankValue['cRight'],'title'=>'Right Point','bg'=>'dark'];
+        return view('pages.dashboard',compact('wallets','renew','rankStatus'));
     }    
 
     public function rankList(){
@@ -87,8 +106,12 @@ class HomeController extends Controller
     }
 
     public function rank(){
-        $cLeft=User::myChildLR(Auth::user()->id,1);
-        $cRight=User::myChildLR(Auth::user()->id,2);
+        $cLeft=User::myChildLR(Auth::user()->id,1)*15;
+        $cRight=User::myChildLR(Auth::user()->id,2)*15;
+
+        $data['cLeft']=$cLeft;
+        $data['cRight']=$cRight;
+
         if($cLeft<=$cRight){
             $small = $cLeft;
         }else{
@@ -113,7 +136,7 @@ class HomeController extends Controller
             $data2->save();
         }
 
-        return null;
+        return $data;
     }
 
 
@@ -494,6 +517,11 @@ class HomeController extends Controller
 
     public function withdrawBalance(Request $request)
     {
+        if($this->checkRenew()==true){
+          Session::flash('warning','Please renew your account');
+          return redirect()->route('home');
+        }
+
         $this->validate($request, array(
             'bankName' => 'required',
             'accountNo' => 'required',

@@ -33,6 +33,9 @@
       .navbar .navbar-nav li > a .menu-icon {
         color: #e5ec0e;
       }
+      .navbar .navbar-nav li > a {
+            color: #fff;
+    }
       .navbar .menu-title {
         color: #749715;
       }
@@ -42,7 +45,7 @@
 <body>
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm  navbar-dark bg-dark">{{-- navbar-default --}}
+        <nav class="navbar navbar-expand-sm  navbar-danger bg-danger">{{-- navbar-default --}}
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
@@ -89,6 +92,9 @@
                     </li>
                     <li>
                         <a href="{{ url('/levelTree') }}"> <i class="menu-icon ti-email"></i>Level Tree </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/rankList') }}"> <i class="menu-icon ti-email"></i>Rank List </a>
                     </li>
                     <li>
                         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class="menu-icon ti-power-off"></i>Log out </a>
