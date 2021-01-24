@@ -70,14 +70,7 @@
               <td></td>
               <td>Mobile</td>
               <td>{{ $user->mobile }}</td>
-            </tr>
-            @foreach($wallets as $item)
-            <tr>
-              <td></td>
-              <td>{{$item['title']}}</td>
-              <td>{{$item['balance']}} Tk</td>
-            </tr>
-            @endforeach
+            </tr>            
             <tr>
               <td></td>
               <td>Email</td>
@@ -98,6 +91,13 @@
               <td>Placement ID</td>
               <td>{{ $user->placementId }}</td>
             </tr>
+            @foreach($wallets as $item)
+            <tr>
+              <td></td>
+              <td>{{$item['title']}}</td>
+              <td>$ {{$item['balance']}}</td>
+            </tr>
+            @endforeach
           </table>   
           
         </div>

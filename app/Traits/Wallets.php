@@ -13,6 +13,7 @@ trait Wallets
         'registerWallet'=>['title'=>'Register wallet','bg'=>'info'],
         'renewWallet'=>['title'=>'Renew wallet','bg'=>'danger'],
         'sponsorWallet'=>['title'=>'Sponsor wallet','bg'=>'warning'],
+        'rankWallet'=>['title'=>'Rank wallet','bg'=>'primary'],
         'selfWallet'=>['title'=>'Generation income wallet','bg'=>'success'],
     ];
 

@@ -7,16 +7,16 @@
       <h3 class="card-title">Rank List</h3>
     </div>
     <div class="card-body">
-      <table class="table">
+      <table class="table table-striped table-danger">
         <tr>
           <th>ID</th>
           <th>Left + Right</th>
           <th>Prize</th>
-          <th>Rank Namr</th>
+          <th>Rank Name</th>
         </tr>
         @foreach($rankInfo as $key=>$item)
         <tr>
-          <td>{{$key}}</td>
+          <td>{{++$key}}</td>
           <td>{{$item['point']}} + {{$item['point']}}</td>
           <td>{{$item['prize']}}</td>
           <td>{{$item['title']}}</td>

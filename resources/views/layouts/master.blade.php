@@ -78,6 +78,7 @@
                             <li><i class="menu-icon fa fa-fort-awesome"></i><a href="{{ url('/myWallet/registerWallet')}}">Register wallet</a></li>
                             <li><i class="menu-icon fa fa-fort-awesome"></i><a href="{{ url('/myWallet/sponsorWallet')}}">Sponsor wallet</a></li>
                             <li><i class="menu-icon fa fa-fort-awesome"></i><a href="{{ url('/myWallet/selfWallet')}}">Generation income wallet</a></li>
+                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="{{ url('/myWallet/rankWallet')}}">Rank wallet</a></li>
                             <li><i class="menu-icon fa fa-fort-awesome"></i><a href="{{ url('/youtubeWallet')}}">Youtube wallet</a></li>
                         </ul>
                     </li>

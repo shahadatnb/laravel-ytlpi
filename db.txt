@@ -1,1 +1,0 @@
-ALTER TABLE `users` ADD `renew` TINYINT NULL DEFAULT '1' AFTER `rank`; 

@@ -112,11 +112,7 @@ class HomeController extends Controller
         $data['cLeft']=$cLeft;
         $data['cRight']=$cRight;
 
-        if($cLeft<=$cRight){
-            $small = $cLeft;
-        }else{
-            $small = $cRight;
-        }
+        $small = ($cLeft<=$cRight)? $cLeft : $cRight;
         
         $userRank = Auth::user()->rank;
         $userRank++;
