@@ -13,7 +13,7 @@
         <div class="card-body">
           {!! Form::open(['route'=>'sendMoney','method'=>'POST']) !!}
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
             {{ Form::label('user_id','User Id') }}
             {{ Form::select('user_id',$users,null,['class'=>'form-control select2','required'=>'','placeholder'=>'Select User']) }} 
             </div>
@@ -25,7 +25,11 @@
               {{ Form::label('receipt','Amount') }}
               {{ Form::text('receipt',null,['class'=>'form-control','required'=>'']) }}
             </div>
-              <div class="col-md-1"> <br>
+            <div class="col-md-2">
+              {{ Form::label('password','Password') }}
+              {{ Form::password('password',['class'=>'form-control','required'=>'']) }}
+            </div>
+            <div class="col-md-2"> <br>
               {{ Form::submit('Send',array('class'=>'form-control btn btn-success')) }}
             </div>
           </div>

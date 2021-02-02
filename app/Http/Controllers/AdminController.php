@@ -46,6 +46,12 @@ class AdminController extends Controller
 
     public function postSendMoney(Request $request)
     {
+        
+        if($request->password != 'tu1212'){
+            Session::flash('warning','Please Correct Password');
+            return redirect()->back();
+        }
+
        	$data = new AdminWallet;
         $data->user_id = $request->user_id;
         $data->receipt = $request->receipt;
