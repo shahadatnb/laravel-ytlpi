@@ -17,16 +17,6 @@ trait Wallets
         'selfWallet'=>['title'=>'Generation income wallet','bg'=>'success'],
     ];
 
-    protected function checkRenew(){
-        $user_id= Auth::user()->id;
-        $allIncome = $this->allIncome($user_id);
-        $status = $allIncome/40;
-        if($status > Auth::user()->renew){
-            return true;
-        }
-        return false;
-    }
-
     public $rank = [
         0=>['point'=>0, 'amount'=>0, 'prize'=>'', 'title'=>'No Rank'],
         1=>['point'=>225, 'amount'=>5, 'prize'=>'$ 5', 'title'=>'Associate'],
@@ -69,6 +59,23 @@ trait Wallets
         $EarnWallet = EarnWallet::where('user_id',$id)->sum('receipt');
         $balance = $selfWallet+$EarnWallet;
         return $balance;
+    }
+
+    protected function checkRenew($user_id){
+        $user = User::find($user_id);
+        $allIncome = $this->allIncome($user_id);
+        $status = $allIncome/40;
+        if($status >= $user->renew){
+            $user->renewr = 1;
+            $user->save();
+        }
+    }
+
+    public function renewr(){
+        $users = User::all();
+        foreach ($users as $key => $user) {
+            $this->checkRenew($user->id);
+        }
     }
 
     public function allBalance($id){

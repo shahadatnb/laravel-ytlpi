@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth']], function(){
 Route::group(['middleware' => ['auth','admin']], function(){
 	Route::get('/admin-panel', 'AdminController@index')->name('admin.panel');
 	Route::get('/allMemberList', 'ProfileController@allMemberList')->name('allMemberList');
+	Route::get('/rrMemberList', 'ProfileController@rrMemberList')->name('rrMemberList');
 	Route::get('/profileView/{id}', 'ProfileController@profileView')->name('profileView');
 
 	//Route::get('/pin', 'AdminController@pin')->name('pin');

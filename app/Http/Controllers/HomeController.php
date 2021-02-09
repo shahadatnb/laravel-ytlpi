@@ -33,6 +33,7 @@ class HomeController extends Controller
         }
         $user = User::find(Auth::user()->id);
         $user->renew = ++$status;
+        $user->renewr = 0;
         $user->save();
 
         $data = new Wallet;
@@ -50,11 +51,7 @@ class HomeController extends Controller
        $rankValue = $this->rank();
        $wallets=$this->allBalance($user_id);
 
-       if($this->checkRenew()==true){
-        $renew = 1;
-       }else{
-        $renew = 0;
-       }
+       $renew = Auth::user()->renewr;
 
        $rankStatus = ['balance'=>$this->rank[Auth::user()->rank]['title'],'title'=>'My Rank','bg'=>'primary'];
        $wallets['totalWithdraw'] = ['balance'=>$this->totalBalance($user_id,'withdrawWallet'),'title'=>'Total Withdraw','bg'=>'success'];

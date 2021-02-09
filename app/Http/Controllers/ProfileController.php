@@ -37,6 +37,12 @@ class ProfileController extends Controller
         return view('admin.allMemberList')->withMembers($member);
     }
 
+    public function rrMemberList()
+    {
+        $member = User::where('renewr',1)->latest()->paginate(50);
+        return view('admin.allMemberList')->withMembers($member);
+    }
+
     public function editProfile(){
         $user_id = User::find(Auth::User()->id); 
         return view('profile.edit')->withUser($user_id);

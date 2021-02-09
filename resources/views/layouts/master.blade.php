@@ -64,6 +64,9 @@
                     </li>
                     <li>
                         <a href="{{url('/allMemberList')}}"><i class="menu-icon fa fa-user"></i>Member List </a>
+                    </li>
+                    <li>
+                        <a href="{{url('/rrMemberList')}}"><i class="menu-icon fa fa-user"></i>Renew Requerd List </a>
                     </li> 
                     <li>
                         <a href="{{url('/youtubeLinks')}}"><i class="menu-icon fa fa-youtube"></i>Youtube </a>

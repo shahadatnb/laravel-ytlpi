@@ -1,0 +1,2 @@
+ALTER TABLE `users` CHANGE `skypeid` `renewr` TINYINT(1) NULL DEFAULT '0'; 
+UPDATE `users` SET` renewr`=0 

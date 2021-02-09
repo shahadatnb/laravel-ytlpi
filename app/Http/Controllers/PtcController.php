@@ -33,7 +33,7 @@ class PtcController extends Controller
      */
     public function youtubeClick()
     {
-        if($this->checkRenew()==true){
+        if(Auth::user()->renewr==1){
           Session::flash('warning','Please renew your account');
           return redirect()->route('home');
         }
@@ -61,6 +61,7 @@ class PtcController extends Controller
 
     public function youtubeClickPost($id)
     {
+      $rew = [1=>.5,2=>.5,3=>.4,4=>.3,5=>.2];
         $ptc = Ptc::where('publish_date',date('Y-m-d'))->where('id',$id)->first();
         if($ptc){
             $cl = DB::table('ptc_click')->where('ptc_id',$ptc->id)->where('user_id',Auth::User()->id)->first();
@@ -75,60 +76,20 @@ class PtcController extends Controller
                 $data->save();
 
                 $user = User::find(Auth::User()->referralId);//placementId
-                if($user){
-                    $c=$this->selfIncomeCheck($user->id);
-                    $amt = $youtube_earn*.5;
-                    if($c){
-                        $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
-                    }else{
-                        $this->selfIncomeNew($user->id, $amt);
-                    }
-                    //------------- L-2
-                    $user2 = User::find($user->referralId);
-                    if($user2){
-                    $c=$this->selfIncomeCheck($user2->id);
-                    $amt = $youtube_earn*.5;
-                    if($c){
-                        $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
-                    }else{
-                        $this->selfIncomeNew($user2->id, $amt);
-                    }
-                      //------------- L-3
-                      $user3 = User::find($user2->referralId);
-                      if($user3){
-                      $c=$this->selfIncomeCheck($user3->id);
-                      $amt = $youtube_earn*.4;
+                foreach ($rew as $key => $value) {
+                  if($user){
+                    if($user->renewr == 0 && $user->renew == Auth::User()->renew ){
+                      $c=$this->selfIncomeCheck($user->id);
+                      $amt = $youtube_earn*$value;
                       if($c){
                           $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
                       }else{
-                          $this->selfIncomeNew($user3->id, $amt);
+                          $this->selfIncomeNew($user->id, $amt);
                       }
-                        //------------- L-3
-                        $user4 = User::find($user3->referralId);
-                        if($user4){
-                        $c=$this->selfIncomeCheck($user4->id);
-                        $amt = $youtube_earn*.3;
-                        if($c){
-                            $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
-                        }else{
-                            $this->selfIncomeNew($user4->id, $amt);
-                        }
-                          //------------- L-3
-                          $user5 = User::find($user4->referralId);
-                          if($user5){
-                          $c=$this->selfIncomeCheck($user5->id);
-                          $amt = $youtube_earn*.2;
-                          if($c){
-                              $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
-                          }else{
-                              $this->selfIncomeNew($user5->id, $amt);
-                          }
-                        } // user5
-                      }// user4
-                    } // user3
-                  } // user2
-                } // user
-
+                    }
+                  $user = User::find($user->referralId);
+                  }
+                }                
                 return redirect($ptc->link);
             } //if(!$cl)
         } //if($ptc)
@@ -210,4 +171,61 @@ class PtcController extends Controller
     {
         //
     }
+
+
+                /*
+                    if($user){
+                    $c=$this->selfIncomeCheck($user->id);
+                    $amt = $youtube_earn*.5;
+                    if($c){
+                        $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
+                    }else{
+                        $this->selfIncomeNew($user->id, $amt);
+                    }
+                    //------------- L-2
+                    $user2 = User::find($user->referralId);
+                    if($user2){
+                    $c=$this->selfIncomeCheck($user2->id);
+                    $amt = $youtube_earn*.5;
+                    if($c){
+                        $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
+                    }else{
+                        $this->selfIncomeNew($user2->id, $amt);
+                    }
+                      //------------- L-3
+                      $user3 = User::find($user2->referralId);
+                      if($user3){
+                      $c=$this->selfIncomeCheck($user3->id);
+                      $amt = $youtube_earn*.4;
+                      if($c){
+                          $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
+                      }else{
+                          $this->selfIncomeNew($user3->id, $amt);
+                      }
+                        //------------- L-3
+                        $user4 = User::find($user3->referralId);
+                        if($user4){
+                        $c=$this->selfIncomeCheck($user4->id);
+                        $amt = $youtube_earn*.3;
+                        if($c){
+                            $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
+                        }else{
+                            $this->selfIncomeNew($user4->id, $amt);
+                        }
+                          //------------- L-3
+                          $user5 = User::find($user4->referralId);
+                          if($user5){
+                          $c=$this->selfIncomeCheck($user5->id);
+                          $amt = $youtube_earn*.2;
+                          if($c){
+                              $this->selfIncomeUpdate($c->id,$amt+$c->receipt);
+                          }else{
+                              $this->selfIncomeNew($user5->id, $amt);
+                          }
+                        } // user5
+                      }// user4
+                    } // user3
+                  } // user2
+                } // user
+              */
 }
