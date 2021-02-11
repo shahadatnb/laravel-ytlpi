@@ -510,7 +510,7 @@ class HomeController extends Controller
 
     public function withdrawBalance(Request $request)
     {
-        if($this->checkRenew()==true){
+        if(Auth::user()->renewr==1){
           Session::flash('warning','Please renew your account');
           return redirect()->route('home');
         }
