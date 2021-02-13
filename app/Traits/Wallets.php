@@ -55,7 +55,7 @@ trait Wallets
 
     public function allIncome($id)
     {
-        $selfWallet = Wallet::where('user_id',$id)->whereIn('wType',['selfWallet'])->sum('receipt');
+        $selfWallet = Wallet::where('user_id',$id)->where('wType','selfWallet')->sum('receipt');
         $EarnWallet = EarnWallet::where('user_id',$id)->sum('receipt');
         $balance = $selfWallet+$EarnWallet;
         return $balance;
@@ -73,7 +73,7 @@ trait Wallets
 
     public function renewr(){
         $users = User::all();
-        foreach ($users as $key => $user) {
+        foreach ($users as $user) {
             $this->checkRenew($user->id);
         }
     }
