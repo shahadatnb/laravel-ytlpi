@@ -89,6 +89,9 @@
                         <a href="{{ url('/youtubeClick') }}"> <i class="menu-icon ti-youtube"></i>Youtube Click</a>
                     </li>
                     <li>
+                        <a href="{{ url('/renewGenList') }}"> <i class="menu-icon ti-user"></i>Renew Gen List</a>
+                    </li>
+                    <li>
                         <a href="{{ url('/newMember') }}"> <i class="menu-icon ti-user"></i>New Member </a>
                     </li>
                     <li>

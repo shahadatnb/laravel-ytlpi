@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth'], function(){
 Route::group(['middleware' => ['auth']], function(){
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/rank', 'HomeController@rank')->name('rank');
-	Route::get('/rankList', 'HomeController@rankList')->name('rankList');
+	Route::get('/renewGenList', 'HomeController@renewGenList')->name('renewGenList');
 	
 	Route::get('/renew', 'HomeController@renew')->name('renew');
 	//Route::get('/404', 'PageController@notFind')->name('/404');
@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::get('/member/id/{id}', 'HomeController@memberListId')->name('memberListId');
 	Route::get('/levelTree', 'HomeController@levelTree')->name('levelTree');
 	Route::get('/levelTree/id/{id}', 'HomeController@levelTreeId')->name('levelTreeId');
+	Route::get('/rankList', 'HomeController@rankList')->name('rankList');
+
 	Route::get('/level', 'HomeController@level')->name('level');
 	Route::get('/matchingBonus', 'HomeController@matchingBonus')->name('matchingBonus');
 

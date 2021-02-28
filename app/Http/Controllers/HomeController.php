@@ -164,6 +164,12 @@ class HomeController extends Controller
         return view('pages.levelTree')->withMembers($member);
     }
 
+    
+    public function renewGenList(){
+        $members = User::where('renew',Auth::user()->renew)->where('id','>',Auth::user()->id)->get();
+        return view('pages.vipMembers',compact('members'));
+    }
+
 
 
 /* ################# Aprove ID     Premium        #########################*/
