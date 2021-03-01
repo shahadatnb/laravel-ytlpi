@@ -26,6 +26,7 @@ class ProfileController extends Controller
         $user = User::find($id);
         if($user){
             $wallets=$this->allBalance($user->id);
+            $wallets['totalSelfY'] = ['balance'=>$this->allIncome($user->id),'title'=>'Total Generation and Youtube','bg'=>'success'];
             return view('profile.profileView',compact('user','wallets'));
         }
         return redirect()->back();
