@@ -57,6 +57,7 @@ class HomeController extends Controller
        $wallets['totalWithdraw'] = ['balance'=>$this->totalBalance($user_id,'withdrawWallet'),'title'=>'Total Withdraw','bg'=>'success'];
        $wallets['totalSponsor'] = ['balance'=>$this->totalBalance($user_id,'sponsorWallet'),'title'=>'Total Sponsor','bg'=>'dark'];
        $wallets['totalSelf'] = ['balance'=>$this->totalBalance($user_id,'selfWallet'),'title'=>'Total Generation Income','bg'=>'secondary'];
+       $wallets['totalSelfY'] = ['balance'=>$this->allIncome($user_id),'title'=>'Total Generation and Youtube','bg'=>'success'];
        $wallets['youtube'] = ['balance'=>$this->youtubeBalance($user_id),'title'=>'Youtube Wallet','bg'=>'danger'];
        $wallets['LeftPoint']=['balance'=>$rankValue['cLeft'],'title'=>'Left Point','bg'=>'success'];
        $wallets['RightPoint']=['balance'=>$rankValue['cRight'],'title'=>'Right Point','bg'=>'dark'];
@@ -166,7 +167,16 @@ class HomeController extends Controller
 
     
     public function renewGenList(){
-        $members = User::where('renew',Auth::user()->renew)->where('id','>',Auth::user()->id)->get();
+        $ids  = array(Auth::user()->id);
+        $members  = array();
+        for($i=1;$i<6;$i++){
+            if(!empty($ids)){
+                $members[$i] = User::whereIn('placementId',$ids)->where('renew',Auth::user()->renew)->get();
+                $ids = User::whereIn('placementId',$ids)->pluck('id')->toArray();
+
+                //dd($members[$i]);
+            }
+        }
         return view('pages.vipMembers',compact('members'));
     }
 
